@@ -341,8 +341,8 @@ deck1.splice(eliminar1,1);
   
   else if (valorJogador1 == valorJogador2) { 
     resultado.innerHTML= empate
-    cartasRestantes1.innerHTML = deck1.length
-    cartasRestantes2.innerHTML = deck2.length
+   cartasRestantes1.innerHTML ="Cartas restantes: " + deck1.length
+    cartasRestantes2.innerHTML ="Cartas restantes: " + deck2.length
   }
   document.getElementById("btnSortear").disabled = false;
   document.getElementById("btnJogar").disabled = true;
