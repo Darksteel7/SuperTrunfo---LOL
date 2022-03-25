@@ -117,3 +117,17 @@ form {
 .carta-status p {
     margin-bottom: 2rem;
 }
+
+.restantes1{
+  color:white;
+  position:relative;
+  left:400px;
+  
+}
+
+.restantes2{
+  color:white;
+  position:relative;
+  right:400px;
+  bottom:35px;
+}

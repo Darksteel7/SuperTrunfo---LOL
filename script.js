@@ -1,4 +1,3 @@
-var cartas = {}
 var deck1={}
 var deck2={}
 
@@ -182,8 +181,8 @@ Defesa: 3,
 }
 };
 var c17 ={
-  nome: "https://cdn1.dotesports.com/wp-content/uploads/2019/03/05133129/Cassiopeia_0.jpg",
-  imagem:"https://conteudo.imguol.com.br/c/entretenimento/a5/2020/07/24/yasuo-1595595075753_v2_3x4.jpg",
+  nome: "Cassiopeia" ,
+  imagem:"https://cdn1.dotesports.com/wp-content/uploads/2019/03/05133129/Cassiopeia_0.jpg",
  atributos: { AD: 1,
 AP: 8,
 Defesa: 3,
@@ -234,31 +233,47 @@ Defesa: 2,
 
 
 
-var carta0 = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20]; //lista de cartas
 
+var cartas = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20]; //lista de cartas
+var deck1=[]
+while (deck1.length < 10) {
+  var cartaDeck = parseInt(Math.random() * cartas.length)
+  deck1.push(cartas[cartaDeck]);
+  cartas.splice (cartaDeck, 1);
+}
+var deck2 = cartas;
 var cartaJogador1;
 var cartaJogador2;
 var jogador1 = {pontos: 0};
 var jogador2 = {pontos:0};
 var jogadores = [jogador1, jogador2];
+var eliminar1;
+var eliminar2;
+
+
+//while para criação do deck1
+
+
+
+
+
 // função base do jogo- sortear carta (criar botoes para sortear deck para dois jogadores)
 function sortearCarta (){
- var numeroCarta1 = parseInt(Math.random() * 20);
-    cartaJogador1 = carta0[numeroCarta1];
-var numeroCarta2 = parseInt(Math.random() * 20);
- //while para sortear carta diferente
-  while (numeroCarta1==numeroCarta2) {
-    var numeroCarta2 = parseInt(Math.random() * 20);
-  }
-  cartaJogador2 = carta0[numeroCarta2];
-  console.log(cartaJogador1, cartaJogador2); 
+ var numeroCarta1 = parseInt(Math.random() * deck1.length);
+    cartaJogador1 = deck1[numeroCarta1];
+var numeroCarta2 = parseInt(Math.random() * deck2.length);
+  cartaJogador2 = deck2[numeroCarta2];
+ 
   document.getElementById("btnSortear").disabled = true;
   document.getElementById("btnJogar").disabled = false;
   document.getElementById("exibir1").disabled = false;
   document.getElementById("exibir2").disabled = false;
- 
+  eliminar1 = numeroCarta1
+  eliminar2 = numeroCarta2;
+  
+  }
   // exibirCartaJogador();
-}
+
 
 function exibirCartaJogador1 (){
    document.getElementById("exibir1").disabled = true;
@@ -294,31 +309,40 @@ function atributoSelecionado () {
 function jogar() {
   
   var atributoSelecao = atributoSelecionado();
-  console.log(atributoSelecao);
+  
   var resultado = document.getElementById("resultado");
   var vitoria1 = "Jogador 1 venceu a rodada"
   var vitoria2 = "Jogador 2 venceu a rodada"
   var empate = "Os jogadores empataram"
   var valorJogador1 = cartaJogador1.atributos[atributoSelecao]
   var valorJogador2 = cartaJogador2.atributos[atributoSelecao]
-
+  var cartasRestantes1 = document.getElementById("restantes1");
+  var cartasRestantes2 = document.getElementById("restantes2")
+  
   
   if(valorJogador1 > valorJogador2){
-    
+    deck1.push(deck2[eliminar2]);
+deck2.splice(eliminar2,1);
+     
    // adicionarPontos()
     resultado.innerHTML= vitoria1
+    cartasRestantes1.innerHTML = "Cartas restantes: " + deck1.length
+    cartasRestantes2.innerHTML = "Cartas restantes: " + deck2.length
   }
   else if(valorJogador1 < valorJogador2){
-    
+    deck2.push(deck1[eliminar1]);
+deck1.splice(eliminar1,1);
     resultado.innerHTML= vitoria2
+    cartasRestantes1.innerHTML ="Cartas restantes: " + deck1.length
+    cartasRestantes2.innerHTML ="Cartas restantes: " + deck2.length
+   
   }
   
-  // else if (atributos[i].checked = false) {
-  //    resultado.innerHTML= empate
-  // }
   
   else if (valorJogador1 == valorJogador2) { 
     resultado.innerHTML= empate
+    cartasRestantes1.innerHTML = deck1.length
+    cartasRestantes2.innerHTML = deck2.length
   }
   document.getElementById("btnSortear").disabled = false;
   document.getElementById("btnJogar").disabled = true;
